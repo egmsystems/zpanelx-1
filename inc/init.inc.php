@@ -140,5 +140,13 @@ if (!isset($_SESSION['zpuid'])) {
 
 runtime_hook::Execute('OnBeforeControllerInit');
 $controller->Init();
-ui_templateparser::Generate("etc/styles/" . ui_template::GetUserTemplate());
+
+if(empty($_REQUEST) or !($_REQUEST["module"]=="xbilling") and ($_REQUEST["action"]=="ResendInvoice")){
+	ui_templateparser::Generate("etc/styles/" . ui_template::GetUserTemplate());
+}else{
+	require_once('dryden/ui/templateparser.class.php');
+	require_once('dryden/ui/template.class.php');
+	require_once('dryden/ui/language.class.php');
+	ui_templateparser::Generate("etc/styles/" . ui_template::GetUserTemplate());
+}
 ?>
